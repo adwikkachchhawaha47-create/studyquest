@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyQuest | Gamified RPG Study Planner</title>
+  <meta name="description" content="Level up your study habits with StudyQuest, an RPG-style gamified task planner and focus timer.">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Favicon SVG data URI -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238b5cf6'><path d='M14.5 17.5L3 6V3h3l11.5 11.5-3 3zM16 8l5 5-2 2-5-5 2-2zM4 20l4-4 2 2-4 4H4v-2z'/></svg>">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-top-left"></div>
+  <div class="ambient-glow glow-top-right"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-layout">
+    
+    <!-- TOP HEADER -->
+    <header class="app-header">
+      <div class="header-container">
+        <!-- Logo / Brand -->
+        <div class="brand">
+          <div class="brand-crest">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-title">Study<span class="text-accent">Quest</span></h1>
+            <span class="brand-badge">Class 9 Edition</span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Bar -->
+        <nav class="desktop-nav" aria-label="Main Navigation">
+          <button class="nav-btn active" data-tab="dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-btn" data-tab="quests">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5-3 3z"></path><path d="M13 19l6-6"></path><path d="M16 8l5 5"></path><path d="M19 21l2-2"></path></svg>
+            <span>Quests</span>
+          </button>
+          <button class="nav-btn" data-tab="timer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Focus Chamber</span>
+          </button>
+          <button class="nav-btn" data-tab="achievements">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            <span>Achievements</span>
+          </button>
+          <button class="nav-btn" data-tab="stats">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <span>Statistics</span>
+          </button>
+          <button class="nav-btn" data-tab="settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        <!-- Player Quick Status Widget -->
+        <div class="header-player-pill" title="Character Profile">
+          <div class="pill-streak" title="Current Daily Streak">
+            <span class="flame-icon">🔥</span>
+            <span id="header-streak-count">0</span>
+          </div>
+
+          <div class="pill-avatar">
+            <span class="avatar-icon">🧙‍♂️</span>
+          </div>
+
+          <div class="pill-details">
+            <div class="pill-top-row">
+              <span class="player-name-display">Young Scholar</span>
+              <span class="player-level-badge player-level-display">Lvl 1</span>
+            </div>
+            <!-- Header XP Mini Progress Bar -->
+            <div class="header-xp-bar-wrap" title="Next Level Progress">
+              <div class="header-xp-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN BODY CONTENT -->
+    <main class="app-main-content">
+
+      <!-- ================= TAB 1: DASHBOARD ================= -->
+      <section id="tab-dashboard" class="tab-content active">
+        <!-- Hero Welcome Card -->
+        <div class="rpg-hero-banner">
+          <div class="hero-banner-content">
+            <div class="hero-badge">ADVENTURER STATUS: ACTIVE</div>
+            <h2 class="hero-heading">Welcome back, <span id="dash-hero-name" class="text-glow">Young Scholar</span>!</h2>
+            <p id="dash-hero-title" class="hero-subtitle">Novice Apprentice • Class 9</p>
+            
+            <!-- Overall XP Bar in Hero -->
+            <div class="hero-xp-section">
+              <div class="hero-xp-labels">
+                <span class="xp-level-tag player-level-display">Lvl 1</span>
+                <span class="header-xp-details">0 / 100 XP (100 to next level)</span>
+                <span class="player-xp-display xp-total-tag">0 XP</span>
+              </div>
+              <div class="rpg-progress-bar">
+                <div class="rpg-progress-fill header-xp-bar-fill" style="width: 0%;">
+                  <div class="progress-shine"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-quick-actions">
+            <button class="btn btn-primary" id="btn-hero-add-quest" data-action="goto-quests">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Forge Quest
+            </button>
+            <button class="btn btn-secondary" id="btn-hero-start-focus" data-action="goto-timer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Focus Chamber
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Stat Metric Cards -->
+        <div class="stats-metric-grid">
+          <div class="metric-card">
+            <div class="metric-icon-wrap icon-purple">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-label">Hero Level</span>
+              <h3 id="dash-stat-level" class="metric-value">1</h3>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon-wrap icon-cyan">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-label">Total XP Earned</span>
+              <h3 id="dash-stat-xp" class="metric-value">0</h3>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon-wrap icon-amber">
+              <span class="flame-icon-large">🔥</span>
+            </div>
+            <div class="metric-data">
+              <span class="metric-label">Current Streak</span>
+              <h3 id="dash-stat-streak" class="metric-value">0 Days</h3>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon-wrap icon-emerald">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-label">Completed Quests</span>
+              <h3 id="dash-stat-completed" class="metric-value">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Goal & Quick Quests Section -->
+        <div class="dashboard-split-layout">
+          <!-- Left Column: Daily Goal & Active Quests -->
+          <div class="dash-column">
+            <!-- Daily Goal Card -->
+            <div class="rpg-card">
+              <div class="card-header-row">
+                <h3 class="card-heading">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                  Today's Quest Goal
+                </h3>
+                <span class="subtext-badge">Daily Mission</span>
+              </div>
+              <p id="dash-goal-text" class="card-description">0 of 3 quests completed today (0%)</p>
+              <div class="rpg-progress-bar">
+                <div id="dash-goal-bar-fill" class="rpg-progress-fill fill-cyan" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Active Quests Preview -->
+            <div class="rpg-card">
+              <div class="card-header-row">
+                <h3 class="card-heading">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  Active Daily Quests
+                </h3>
+                <button class="btn-link" data-action="goto-quests">View All Quests &rarr;</button>
+              </div>
+              <div id="dash-active-quests-list" class="dash-quests-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Recent Activity Log & Focus Chamber Preview -->
+          <div class="dash-column">
+            <!-- Focus Quick-Launch Card -->
+            <div class="rpg-card focus-promo-card">
+              <div class="focus-promo-content">
+                <div class="focus-promo-badge">CHRONO SHRINE</div>
+                <h4 class="focus-promo-title">Enter The Focus Chamber</h4>
+                <p class="focus-promo-text">Train your mind with 25-minute Pomodoro study sessions. Earn +15 XP for every completed trial!</p>
+                <button class="btn btn-primary" data-action="goto-timer">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  Begin 25m Focus Session
+                </button>
+              </div>
+              <div class="focus-promo-art">⏳</div>
+            </div>
+
+            <!-- Recent XP Log Card -->
+            <div class="rpg-card">
+              <div class="card-header-row">
+                <h3 class="card-heading">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  Recent Study Activity
+                </h3>
+              </div>
+              <div id="dash-recent-xp-log" class="xp-log-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 2: QUESTS ================= -->
+      <section id="tab-quests" class="tab-content">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Study Quest Log</h2>
+            <p class="section-subtitle">Conquer assignments, revise chapters, and level up your knowledge.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-open-add-quest">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Forge New Quest
+          </button>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="quest-toolbar">
+          <!-- Status Filters -->
+          <div class="filter-pill-group" role="group" aria-label="Filter by Status">
+            <button class="filter-btn quest-filter-status active" data-status="all">All Quests</button>
+            <button class="filter-btn quest-filter-status" data-status="active">Active</button>
+            <button class="filter-btn quest-filter-status" data-status="completed">Completed</button>
+          </div>
+
+          <!-- Subject Dropdown Filter -->
+          <div class="filter-select-wrap">
+            <label for="quest-subject-filter" class="sr-only">Filter by Subject</label>
+            <select id="quest-subject-filter" class="form-select">
+              <option value="all">All Subjects</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Science">Science</option>
+              <option value="English">English</option>
+              <option value="Social Science">Social Science</option>
+              <option value="Computer">Computer</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Search Input -->
+          <div class="filter-search-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="quest-search-input" class="form-input search-input" placeholder="Search quests by title or note...">
+          </div>
+
+          <!-- Active Quests Count Badge -->
+          <div id="quests-count-badge" class="count-badge">0 Quests</div>
+        </div>
+
+        <!-- Quest Cards Container -->
+        <div id="quests-cards-container" class="quest-grid">
+          <!-- Dynamically populated by quests.js -->
+        </div>
+      </section>
+
+      <!-- ================= TAB 3: FOCUS CHAMBER ================= -->
+      <section id="tab-timer" class="tab-content">
+        <div class="section-header-row center-header">
+          <div>
+            <h2 class="section-title">The Focus Chamber</h2>
+            <p class="section-subtitle">Harness deep concentration. Complete uninterrupted study sessions to earn XP.</p>
+          </div>
+        </div>
+
+        <div class="timer-card-wrapper">
+          <div class="rpg-card timer-main-card">
+            <!-- Mode Switcher Tabs -->
+            <div class="timer-mode-switcher">
+              <button class="timer-mode-btn active" id="timer-tab-focus">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Focus Session (25m)
+              </button>
+              <button class="timer-mode-btn" id="timer-tab-break">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                Short Break (5m)
+              </button>
+            </div>
+
+            <!-- Current Mode Badge -->
+            <div id="timer-mode-badge" class="timer-badge badge-focus">
+              Focus Session (25 min)
+            </div>
+
+            <!-- Circular SVG Countdown Ring -->
+            <div class="timer-circle-container">
+              <svg class="timer-ring-svg" width="280" height="280" viewBox="0 0 260 260">
+                <defs>
+                  <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#06b6d4" />
+                    <stop offset="100%" stop-color="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+                <!-- Background track -->
+                <circle class="timer-ring-bg" cx="130" cy="130" r="110" />
+                <!-- Animated Progress bar -->
+                <circle id="timer-ring-progress" class="timer-ring-stroke" cx="130" cy="130" r="110" />
+              </svg>
+              
+              <!-- Center Time Display -->
+              <div class="timer-time-content">
+                <div id="timer-time-display" class="timer-digits">25:00</div>
+                <span class="timer-sublabel">Chamber Active</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="timer-action-controls">
+              <button id="btn-timer-start" class="btn btn-primary btn-lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Start Session
+              </button>
+              <button id="btn-timer-pause" class="btn btn-warning btn-lg" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                Pause
+              </button>
+              <button id="btn-timer-resume" class="btn btn-primary btn-lg" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Resume
+              </button>
+              <button id="btn-timer-reset" class="btn btn-secondary btn-lg" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                Reset
+              </button>
+            </div>
+
+            <!-- Anti-Cheat & Lore Tip -->
+            <div class="timer-lore-box">
+              <span class="lore-icon">💡</span>
+              <p><strong>Adventurer Rule:</strong> Focus sessions require complete devotion. Rewards (+15 XP &amp; session count) are granted only when the countdown reaches 00:00 without reset.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 4: ACHIEVEMENTS ================= -->
+      <section id="tab-achievements" class="tab-content">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Hall of Achievements</h2>
+            <p class="section-subtitle">Unlock legendary badges as you conquer your academic milestones.</p>
+          </div>
+        </div>
+
+        <div id="achievements-grid-container" class="achievements-grid">
+          <!-- Dynamically populated by gamification.js / app.js -->
+        </div>
+      </section>
+
+      <!-- ================= TAB 5: STATISTICS ================= -->
+      <section id="tab-stats" class="tab-content">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Adventurer Analytics</h2>
+            <p class="section-subtitle">Track your streaks, study consistency, and academic growth.</p>
+          </div>
+        </div>
+
+        <!-- 6 Metrics Grid -->
+        <div class="stats-overview-grid">
+          <div class="rpg-card stat-summary-card">
+            <span class="stat-summary-icon">🔥</span>
+            <div class="stat-summary-info">
+              <span class="stat-summary-label">Current Streak</span>
+              <h3 id="stats-cur-streak" class="stat-summary-val">0 Days</h3>
+            </div>
+          </div>
+
+          <div class="rpg-card stat-summary-card">
+            <span class="stat-summary-icon">🏆</span>
+            <div class="stat-summary-info">
+              <span class="stat-summary-label">Best Streak Record</span>
+              <h3 id="stats-best-streak" class="stat-summary-val">0 Days</h3>
+            </div>
+          </div>
+
+          <div class="rpg-card stat-summary-card">
+            <span class="stat-summary-icon">⚔️</span>
+            <div class="stat-summary-info">
+              <span class="stat-summary-label">Total Quests Done</span>
+              <h3 id="stats-total-quests" class="stat-summary-val">0</h3>
+            </div>
+          </div>
+
+          <div class="rpg-card stat-summary-card">
+            <span class="stat-summary-icon">⏳</span>
+            <div class="stat-summary-info">
+              <span class="stat-summary-label">Focus Sessions Done</span>
+              <h3 id="stats-total-sessions" class="stat-summary-val">0</h3>
+            </div>
+          </div>
+
+          <div class="rpg-card stat-summary-card">
+            <span class="stat-summary-icon">⏱️</span>
+            <div class="stat-summary-info">
+              <span class="stat-summary-label">Total Focus Time</span>
+              <h3 id="stats-total-minutes" class="stat-summary-val">0 min</h3>
+            </div>
+          </div>
+
+          <div class="rpg-card stat-summary-card">
+            <span class="stat-summary-icon">📅</span>
+            <div class="stat-summary-info">
+              <span class="stat-summary-label">Active Study Days</span>
+              <h3 id="stats-total-study-days" class="stat-summary-val">0 Days</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7-Day Activity Chart Card -->
+        <div class="rpg-card chart-card">
+          <div class="card-header-row">
+            <div>
+              <h3 class="card-heading">Weekly Activity (Past 7 Days)</h3>
+              <p class="card-description">Total XP earned each day from completed quests and focus chambers.</p>
+            </div>
+          </div>
+          <div id="stats-weekly-chart" class="weekly-bar-chart">
+            <!-- Dynamically populated bar chart -->
+          </div>
+        </div>
+
+        <!-- Full XP Log -->
+        <div class="rpg-card">
+          <div class="card-header-row">
+            <h3 class="card-heading">Complete XP Chronicle</h3>
+          </div>
+          <div id="stats-xp-full-log" class="xp-full-history-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 6: SETTINGS ================= -->
+      <section id="tab-settings" class="tab-content">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Adventurer Settings</h2>
+            <p class="section-subtitle">Customize your character profile and manage local study quest records.</p>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Profile Settings -->
+          <div class="rpg-card">
+            <h3 class="card-heading">Hero Profile</h3>
+            <form id="settings-profile-form" class="settings-form">
+              <div class="form-group">
+                <label for="settings-input-name" class="form-label">Hero Name</label>
+                <input type="text" id="settings-input-name" class="form-input" required maxlength="30" placeholder="e.g. Young Scholar">
+              </div>
+
+              <div class="form-group">
+                <label for="settings-input-grade" class="form-label">Class / Grade</label>
+                <input type="text" id="settings-input-grade" class="form-input" maxlength="20" placeholder="e.g. Class 9">
+              </div>
+
+              <div class="form-group">
+                <label for="settings-input-goal" class="form-label">Daily Quest Goal (Tasks per Day)</label>
+                <input type="number" id="settings-input-goal" class="form-input" min="1" max="15" value="3">
+              </div>
+
+              <button type="submit" class="btn btn-primary">Save Profile Changes</button>
+            </form>
+          </div>
+
+          <!-- Quick Test & Seed Options -->
+          <div class="rpg-card">
+            <h3 class="card-heading">Quick Testing Utilities</h3>
+            <p class="card-description">Quickly add sample Class 9 study quests (Math, Science, English) to test filters and XP mechanics.</p>
+            <button id="btn-seed-quests" class="btn btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Add 3 Sample Class 9 Quests
+            </button>
+          </div>
+
+          <!-- Danger Zone: Reset Data -->
+          <div class="rpg-card card-danger">
+            <h3 class="card-heading text-danger">Danger Zone</h3>
+            <p class="card-description">Need a fresh start? Resetting your progress will erase all quests, level progress, streaks, and achievements.</p>
+            <button id="btn-reset-data" class="btn btn-danger">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Reset All Progress
+            </button>
+          </div>
+
+          <!-- Storage Notice Card -->
+          <div class="rpg-card storage-notice-card">
+            <div class="notice-icon">🛡️</div>
+            <div>
+              <h4 class="notice-title">Browser LocalStorage Guarantee</h4>
+              <p class="notice-text">All your quests and RPG statistics are preserved locally inside your browser via HTML5 LocalStorage. No server, no account creation, and no network connectivity required.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-nav" aria-label="Mobile Navigation">
+      <button class="mobile-nav-btn active" data-tab="dashboard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="quests">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5-3 3z"></path><path d="M13 19l6-6"></path></svg>
+        <span>Quests</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="timer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span>Focus</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="achievements">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+        <span>Badges</span>
+      </button>
+      <button class="mobile-nav-btn" data-tab="stats">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <span>Stats</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. ADD / EDIT QUEST MODAL -->
+  <div id="quest-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="quest-modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="quest-modal-title" class="modal-title">Forge New Study Quest</h3>
+        <button class="btn-modal-close" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <form id="quest-modal-form" class="modal-form">
+        <div class="form-group">
+          <label for="quest-input-title" class="form-label">Quest Title <span class="required">*</span></label>
+          <input type="text" id="quest-input-title" class="form-input" required minlength="3" maxlength="100" placeholder="e.g. Revise Chapter 2 Science: Tissues">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="quest-input-subject" class="form-label">Subject</label>
+            <select id="quest-input-subject" class="form-select">
+              <option value="Mathematics">Mathematics</option>
+              <option value="Science">Science</option>
+              <option value="English">English</option>
+              <option value="Social Science">Social Science</option>
+              <option value="Computer">Computer</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="quest-input-difficulty" class="form-label">Difficulty &amp; XP</label>
+            <select id="quest-input-difficulty" class="form-select">
+              <option value="Easy">Easy (10 XP)</option>
+              <option value="Medium" selected>Medium (25 XP)</option>
+              <option value="Hard">Hard (40 XP)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="quest-input-duedate" class="form-label">Target Due Date</label>
+          <input type="date" id="quest-input-duedate" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label for="quest-input-notes" class="form-label">Notes &amp; Lore (Optional)</label>
+          <textarea id="quest-input-notes" class="form-textarea" rows="3" maxlength="300" placeholder="e.g. Practice questions 3 to 7 from NCERT book..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-close">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-quest">Save Quest</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. CONFIRMATION MODAL -->
+  <div id="modal-confirm" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h3 id="confirm-modal-title" class="modal-title">Confirm Action</h3>
+        <button class="btn-modal-close" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-message" class="confirm-text">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-action">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. LEVEL UP CELEBRATION MODAL -->
+  <div id="modal-levelup" class="modal modal-levelup" role="dialog" aria-modal="true" aria-labelledby="levelup-heading">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog modal-levelup-dialog">
+      <div class="levelup-shine"></div>
+      <div class="levelup-art">⭐</div>
+      <span class="levelup-tag">VICTORY ACHIEVED!</span>
+      <h2 id="levelup-heading" class="levelup-title">LEVEL UP!</h2>
+      <div class="levelup-circle">
+        <span class="levelup-lvl-prefix">LEVEL</span>
+        <span id="levelup-number" class="levelup-big-num">2</span>
+      </div>
+      <h3 id="levelup-title" class="levelup-rank">Curious Explorer</h3>
+      <p class="levelup-desc">Your dedication has expanded your intellect and unlocked new academic prowess!</p>
+      <button class="btn btn-primary btn-lg" id="btn-levelup-dismiss">Claim Glory &amp; Continue</button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- SCRIPT INCLUDES (Order is critical for dependencies) -->
+  <script src="js/storage.js"></script>
+  <script src="js/gamification.js"></script>
+  <script src="js/quests.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
